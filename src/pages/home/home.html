@@ -1,0 +1,66 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Dashboard</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+
+  <ion-card>
+    <ion-card-header>
+      <strong>Cloudoki</strong> Balance
+    </ion-card-header>
+    <ion-card-content>
+      <ion-item>
+        <ion-icon name="calculator" item-left large ></ion-icon>
+        <h1>{{totals?.balance_eu}}</h1>
+        <p>Total actual net balance of <strong>Lab Gent</strong> and <strong>CloudokiLX</strong>.</p>
+      </ion-item>
+
+      <button ion-button outline block [color]="isLoading ? 'light' : 'primary'" (click)="refreshAccounts($event)">Refresh Sources</button>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card>
+    <ion-card-header>
+      <strong>Cloudoki</strong> Turn-over
+    </ion-card-header>
+    <ion-card-content>
+      <ion-item>
+        <ion-icon name="analytics" item-left large ></ion-icon>
+        <h1>{{totals?.turnover_eu}}</h1>
+        <p>Turn-over of past <strong>12 months</strong></p>
+      </ion-item>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card>
+    <ion-card-header>
+      <strong>Cloudoki</strong> Expected
+    </ion-card-header>
+    <ion-card-content>
+      <ion-item>
+        <ion-icon name="analytics" item-left large ></ion-icon>
+        <h1>{{totals?.expected_eu}}</h1>
+        <p>Open and drafted <strong>Lab Gent</strong> invoices</p>
+      </ion-item>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card>
+    <ion-card-header>
+      Over due invoices
+    </ion-card-header>
+    <ion-card-content>
+      <ion-list>
+        <ion-item *ngFor="let doc of docs">
+          <ion-badge color="danger" item-left>{{doc.meta.number}}</ion-badge>
+          <h2>{{doc.name}}</h2>
+        </ion-item>
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

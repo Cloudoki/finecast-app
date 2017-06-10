@@ -1,0 +1,97 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Listing</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+
+  <div>
+    <ion-segment [(ngModel)]="channel">
+      <ion-segment-button value="invoices">
+        Invoices
+      </ion-segment-button>
+      <ion-segment-button value="out_be">
+        Belgian out
+      </ion-segment-button>
+      <ion-segment-button value="out_lx">
+        Lisbon out
+      </ion-segment-button>
+    </ion-segment>
+  </div>
+
+  <div [ngSwitch]="channel">
+
+    <ion-list *ngSwitchCase="'invoices'">
+      <ng-container *ngFor="let dte of separdates">
+        <ion-item-divider sticky color="light">
+          {{dte | date}}
+          <span item-right><3</span>
+        </ion-item-divider>
+        <ion-item-group>
+   <!-- <ion-item-group reorder="true" (ionItemReorder)="reorderItems($event, invoices)"> -->
+          <ng-container *ngFor="let item of invoices | filter : 'planned' : dte.getTime()">
+            <ion-item>
+              <ion-badge color="{{item.badgecolor}}" item-left>{{item.meta.number}}</ion-badge>
+              {{item.name}}
+              <div class="item-note" item-right>{{item.meta.due_amount | currency}}</div>
+            </ion-item>
+          </ng-container>
+        </ion-item-group>
+      </ng-container>
+    </ion-list>
+
+    <ion-list *ngSwitchCase="'out_be'">
+      <ng-container *ngFor="let date of separdates">
+        <ion-item-divider sticky color="light">
+          {{date | date}}
+        </ion-item-divider>
+        <ion-item-group>
+          <ion-item *ngFor="let item of outs_be | filter : 'planned' : date.getTime()">
+            <div class="fixed-left-item" item-left>
+              <ion-badge color="light">{{item.meta.number}}</ion-badge>
+            </div>
+            <div class="fixed-left-item" item-left>{{item.meta.due_amount | currency}}</div>
+            {{item.name}}
+            <div class="item-note" item-right>{{item.meta.due_at | date}}</div>
+          </ion-item>
+        </ion-item-group>
+      </ng-container>
+    </ion-list>
+
+    <ion-list *ngSwitchCase="'out_lx'">
+      <ng-container *ngFor="let date of separdates">
+        <ion-item-divider sticky color="light">{{date | date}}</ion-item-divider>
+        <ion-item-group>
+          <ion-item *ngFor="let item of outs_lx | filter : 'planned' : date.getTime()">
+            <div class="fixed-left-item" item-left>
+              <ion-badge color="light">{{item.meta.number}}</ion-badge>
+            </div>
+            <div class="fixed-left-item" item-left>{{item.meta.due_amount | currency}}</div>
+            {{item.name}}
+            <div class="item-note" item-right>{{item.meta.due_at | date}}</div>
+          </ion-item>
+        </ion-item-group>
+      </ng-container>
+    </ion-list>
+
+  </div>
+
+
+
+  <!-- <ion-list reorder="true" (ionItemReorder)="reorderItems($event)">
+    <button ion-item *ngFor="let item of items" (click)="itemTapped($event, item)">
+      <ion-badge color="danger" item-left>{{item.meta.number}}</ion-badge>
+      {{item.name}}
+      <div class="item-note" item-right>
+        {{item.meta.subject}}
+      </div>
+    </button>
+  </ion-list>
+  <div *ngIf="selectedItem" padding>
+    You navigated here from <b>{{selectedItem.title}}</b>
+  </div> -->
+</ion-content>
